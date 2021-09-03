@@ -12,17 +12,12 @@ data class City(
 
     @Column(name = "Name", length = 30, nullable = false)
     val name: String,
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val districts: List<District>
 ) {
     constructor(
-        name: String,
-        districts: List<District>
+        name: String
     ) : this(
         id = null,
-        name = name,
-        districts = districts
+        name = name
     )
 
     override fun equals(other: Any?): Boolean {
@@ -33,7 +28,6 @@ data class City(
 
         if (id != other.id) return false
         if (name != other.name) return false
-        if (districts != other.districts) return false
 
         return true
     }
@@ -41,11 +35,10 @@ data class City(
     override fun hashCode(): Int {
         var result = id ?: 0
         result = 31 * result + name.hashCode()
-        result = 31 * result + districts.hashCode()
         return result
     }
 
     override fun toString(): String {
-        return "City(id=$id, name='$name', districts=$districts)"
+        return "City(id=$id, name='$name')"
     }
 }

@@ -28,7 +28,7 @@ public class CityServiceTest {
 
     @Test
     public void testGetCityById_whenCityIdExists_shouldGetCity() {
-        City expected = new City(1, "ADANA", List.of());
+        City expected = new City(1, "ADANA");
         when(cityService.findCityById(1)).thenReturn(expected);
         City actual = cityService.findCityById(1);
         assertEquals(expected, actual);
