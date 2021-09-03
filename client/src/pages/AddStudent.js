@@ -10,6 +10,7 @@ const AddStudent = () => {
     const [loading, setLoading] = useState(false);
 
     const [selectedCity, setSelectedCity] = useState(null);
+    const [selectedCityId, setSelectedCityId] = useState(null);
     const [selectedDistrict, setSelectedDistrict] = useState(null);
 
     const [name, setName] = useState('');
@@ -24,22 +25,24 @@ const AddStudent = () => {
     const [districtError, setDistrictError] = useState(false);
 
     let cities = [
-        { name: 'Ankara' },
-        { name: 'Kayseri' },
-        { name: 'İstanbul' },
-        { name: 'İzmir' },
+        { id: 1, name: 'Ankara' },
+        { id: 2, name: 'Kayseri' },
+        { id: 3, name: 'İstanbul' },
+        { id: 4, name: 'İzmir' },
     ];
 
     let districts = [
-        { name: 'Arizona', code: 'Arizona' },
-        { name: 'California', value: 'California' },
-        { name: 'Florida', code: 'Florida' },
-        { name: 'Ohio', code: 'Ohio' },
-        { name: 'Washington', code: 'Washington' }
+        { id: 1, name: 'Arizona', city_id: 1 },
+        { id: 2, name: 'California', city_id: 1 },
+        { id: 3, name: 'Florida', city_id: 2 },
+        { id: 4, name: 'Ohio', city_id: 3 },
+        { id: 5, name: 'Washington', city_id: 4 },
+        { id: 6, name: 'L.A.', city_id: 5 },
     ];
 
     const onCityChange = (e) => {
         setSelectedCity(e.value);
+        setSelectedCityId(e.value.id);
     }
 
     const onDistrictChange = (e) => {
@@ -140,7 +143,7 @@ const AddStudent = () => {
                             className={districtError ? "p-invalid" : ""}
                             inputId="district"
                             value={selectedDistrict}
-                            options={districts}
+                            options={selectedCityId !== null ? districts.filter(i => i.city_id === selectedCityId) : null}
                             onChange={onDistrictChange}
                             placeholder="Select"
                             optionLabel="name"
