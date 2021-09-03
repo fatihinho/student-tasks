@@ -4,6 +4,5 @@ import com.fcinar.studenttasks.model.District
 
 data class CityDto(
     val id: Int?,
-    val name: String,
-    val districts: List<District>
+    val name: String
 )

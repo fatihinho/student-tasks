@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class CityDtoConverter {
     public CityDto convert(@NotNull City from) {
-        return new CityDto(from.getId(), from.getName(), from.getDistricts());
+        return new CityDto(from.getId(), from.getName());
     }
 }
