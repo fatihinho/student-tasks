@@ -11,24 +11,24 @@ data class Student(
     val id: UUID,
 
     @Column(name = "Name", length = 50, nullable = false)
-    val name: String,
+    var name: String,
 
     @Column(name = "Surname", length = 50, nullable = false)
-    val surname: String,
+    var surname: String,
 
     @Column(name = "PhoneNumber", length = 30)
-    val phoneNumber: String,
+    var phoneNumber: String,
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "CityId", nullable = false)
-    val city: City,
+    var city: City,
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "DistrictId", nullable = false)
-    val district: District,
+    var district: District,
 
-    @Column(name = "Description", length = 100, nullable = false)
-    val description: String,
+    @Column(name = "Description", length = 100)
+    var description: String?,
 ) {
     constructor(
         name: String,
@@ -36,7 +36,7 @@ data class Student(
         phoneNumber: String,
         city: City,
         district: District,
-        description: String
+        description: String?
     ) : this(
         id = UUID.randomUUID(),
         name = name,
@@ -71,12 +71,12 @@ data class Student(
         result = 31 * result + phoneNumber.hashCode()
         result = 31 * result + city.hashCode()
         result = 31 * result + district.hashCode()
-        result = 31 * result + description.hashCode()
+        result = 31 * result + (description?.hashCode() ?: 0)
         return result
     }
 
     override fun toString(): String {
         return "Student(id=$id, name='$name', surname='$surname', phoneNumber='$phoneNumber', " +
-                "city=$city, district=$district, description='$description')"
+                "city=$city, district=$district, description=$description)"
     }
 }

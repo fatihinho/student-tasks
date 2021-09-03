@@ -3,6 +3,7 @@ package com.fcinar.studenttasks.service;
 import com.fcinar.studenttasks.dto.StudentDto;
 import com.fcinar.studenttasks.dto.converter.StudentDtoConverter;
 import com.fcinar.studenttasks.dto.request.CreateStudentRequest;
+import com.fcinar.studenttasks.dto.request.UpdateStudentRequest;
 import com.fcinar.studenttasks.exception.StudentNotFoundException;
 import com.fcinar.studenttasks.model.City;
 import com.fcinar.studenttasks.model.District;
@@ -53,5 +54,23 @@ public class StudentService {
         Student student = new Student(createStudentRequest.getName(), createStudentRequest.getSurname(),
                 createStudentRequest.getPhoneNumber(), city, district, createStudentRequest.getDescription());
         return studentDtoConverter.convert(studentRepository.save(student));
+    }
+
+    public StudentDto updateStudentById(UUID id, @NotNull UpdateStudentRequest updateStudentRequest) {
+        City city = cityService.findCityById(updateStudentRequest.getCityId());
+        District district = districtService.findDistrictById(updateStudentRequest.getDistrictId());
+        Student student = findStudentById(id);
+        student.setName(updateStudentRequest.getName());
+        student.setSurname(updateStudentRequest.getSurname());
+        student.setPhoneNumber(updateStudentRequest.getPhoneNumber());
+        student.setCity(city);
+        student.setDistrict(district);
+        student.setDescription(updateStudentRequest.getDescription());
+        return studentDtoConverter.convert(studentRepository.save(student));
+    }
+
+    public void deleteStudentById(UUID id) {
+        Student student = findStudentById(id);
+        studentRepository.delete(student);
     }
 }

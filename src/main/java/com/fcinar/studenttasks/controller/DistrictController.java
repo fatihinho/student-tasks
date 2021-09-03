@@ -33,6 +33,16 @@ public class DistrictController {
         }
     }
 
+    @GetMapping("/districts/{id}")
+    public ResponseEntity<DistrictDto> getDistrictById(@PathVariable Integer id) {
+        try {
+            DistrictDto district = districtService.getDistrictById(id);
+            return new ResponseEntity<>(district, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/districts/code/{cityId}")
     public ResponseEntity<List<DistrictDto>> getAllDistrictsByCityId(@PathVariable Integer cityId) {
         try {

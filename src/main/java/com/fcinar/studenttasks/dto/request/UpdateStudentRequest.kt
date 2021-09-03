@@ -1,6 +1,6 @@
 package com.fcinar.studenttasks.dto.request
 
-data class CreateStudentRequest(
+data class UpdateStudentRequest(
     val name: String,
     val surname: String,
     val phoneNumber: String,
