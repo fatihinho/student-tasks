@@ -11,6 +11,7 @@ import { Ripple } from 'primereact/ripple';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
+import { confirmDialog } from 'primereact/confirmdialog';
 
 const StudentList = () => {
     const history = useHistory();
@@ -68,18 +69,39 @@ const StudentList = () => {
         }
     }
 
+    const onClickUploadImage = () => {
+        if (selectedStudent !== null) {
+            history.push({
+                pathname: `/upload-image/${selectedStudent.id}`,
+            });
+        } else {
+            toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'You have to select a student!', life: 3000 });
+        }
+    }
+
+    const deleteStudent = () => {
+        const studentService = new StudentService();
+        studentService.deleteStudentById(selectedStudent.id)
+            .then(res => {
+                if (res.status === 200) {
+                    toast.current.show({ severity: 'success', summary: 'Success', detail: 'Student has deleted!' });
+                    onClickClear();
+                }
+            }).catch(err => {
+                toast.current.show({ severity: 'error', summary: 'Error', detail: 'A problem occurred!' });
+            })
+    }
+
     const onClickDelete = () => {
         if (selectedStudent !== null) {
-            const studentService = new StudentService();
-            studentService.deleteStudentById(selectedStudent.id)
-                .then(res => {
-                    if (res.status === 200) {
-                        toast.current.show({ severity: 'success', summary: 'Success', detail: 'Student has deleted!' });
-                        onClickClear();
-                    }
-                }).catch(err => {
-                    toast.current.show({ severity: 'error', summary: 'Error', detail: 'A problem occurred!' });
-                })
+            confirmDialog({
+                message: 'Do you want to delete this student?',
+                header: 'Delete Confirmation',
+                icon: 'pi pi-info-circle',
+                acceptClassName: 'p-button-danger',
+                accept: deleteStudent,
+                reject: () => null
+            });
         } else {
             toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'You have to select a student!', life: 3000 });
         }
@@ -145,12 +167,10 @@ const StudentList = () => {
         const studentService = new StudentService();
         studentService.getAllStudents()
             .then(res => {
-                if (res.status === 200) {
+                if (res.status === 200 || res.status === 204) {
                     setStudents(res.data);
                 }
-            }).catch(err => {
-                toast.current.show({ severity: 'error', summary: 'Error', detail: 'A problem occurred!' });
-            });
+            })
     }, [students]);
 
     return (
@@ -184,6 +204,13 @@ const StudentList = () => {
                             float: 'right',
                             zIndex: 1
                         }} onClick={onClickUpdate} className="p-button-rounded p-button-warning" label="Update" icon="pi pi-pencil" />
+
+                        <Button style={{
+                            marginBottom: 16,
+                            marginRight: 4,
+                            float: 'right',
+                            zIndex: 1
+                        }} onClick={onClickUploadImage} className="p-button-rounded" label="Upload Image" icon="pi pi-upload" />
 
                         <DataTable
                             paginator
