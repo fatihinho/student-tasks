@@ -2,26 +2,29 @@ import React, { useEffect, useRef, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { InputMask } from 'primereact/inputmask';
-import { Fieldset } from 'primereact/fieldset';
 import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Helmet } from 'react-helmet';
+import { useLocation } from 'react-router-dom';
 import { StudentService } from '../services/StudentService';
+import { Fieldset } from 'primereact/fieldset';
 import { Toast } from 'primereact/toast';
+import { useParams } from 'react-router';
 
-const AddStudent = () => {
-    const [loading, setLoading] = useState(false);
+const UpdateStudent = () => {
+    const { id } = useParams();
+    const location = useLocation();
     const toast = useRef();
+
+    const [loading, setLoading] = useState(false);
 
     const [selectedCity, setSelectedCity] = useState(null);
     const [selectedCityId, setSelectedCityId] = useState(null);
     const [selectedDistrict, setSelectedDistrict] = useState(null);
     const [selectedDistrictId, setSelectedDistrictId] = useState(null);
 
-    const [name, setName] = useState('');
-    const [surname, setSurname] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [description, setDescription] = useState('');
+    const [cities, setCities] = useState([]);
+    const [districts, setDistricts] = useState([]);
 
     const [nameError, setNameError] = useState(false);
     const [surnameError, setSurnameError] = useState(false);
@@ -29,21 +32,17 @@ const AddStudent = () => {
     const [cityError, setCityError] = useState(false);
     const [districtError, setDistrictError] = useState(false);
 
-    const [cities, setCities] = useState([]);
-    const [districts, setDistricts] = useState([]);
+    const [name, setName] = useState(location.state.name);
+    const [surname, setSurname] = useState(location.state.surname);
+    const [phoneNumber, setPhoneNumber] = useState(location.state.phoneNumber);
+    const [description, setDescription] = useState(location.state.description);
 
-    const resetInputs = () => {
-        setName('');
-        setSurname('');
-        setPhoneNumber('');
-        setDescription('');
-        setSelectedCity(null);
-        setSelectedCityId(null);
-        setSelectedDistrict(null);
-        setSelectedDistrictId(null);
-    }
+    const city = location.state.city;
+    const district = location.state.district;
 
     const onCityChange = (e) => {
+        setSelectedDistrict(null);
+        setSelectedDistrictId(null);
         setSelectedCity(e.value);
         setSelectedCityId(e.value.id);
     }
@@ -53,20 +52,19 @@ const AddStudent = () => {
         setSelectedDistrictId(e.value.id);
     }
 
-    const onClickRegister = () => {
+    const onClickUpdate = () => {
         if (name.trim().length > 0 && surname.trim().length > 0 && phoneNumber.length > 0 && selectedCity !== null && selectedDistrict !== null) {
             setLoading(true);
             const studentService = new StudentService();
-            studentService.createStudent(name, surname, phoneNumber, selectedCityId, selectedDistrictId, description)
+            studentService.updateStudentById(id, name, surname, phoneNumber, selectedCityId, selectedDistrictId, description)
                 .then(res => {
-                    if (res.status === 201) {
-                        toast.current.show({ severity: 'success', summary: 'Success', detail: 'Student has created!' });
+                    if (res.status === 200) {
+                        toast.current.show({ severity: 'success', summary: 'Success', detail: 'Student has updated!' });
                         setLoading(false);
                     }
-                }).catch(err => {
+                })
+                .catch(err => {
                     toast.current.show({ severity: 'error', summary: 'Error', detail: 'A problem occurred!' });
-                }).finally(() => {
-                    resetInputs();
                 });
         } else {
             if (name.trim().length <= 0) {
@@ -99,12 +97,18 @@ const AddStudent = () => {
     }
 
     useEffect(() => {
+        setSelectedCity(city);
+        setSelectedCityId(city.id);
+        setSelectedDistrict(district);
+        setSelectedDistrictId(district.id);
         const studentService = new StudentService();
         studentService.getAllCities()
             .then(res => {
                 if (res.status === 200) {
                     setCities(res.data);
                 }
+            }).catch(err => {
+                toast.current.show({ severity: 'error', summary: 'Error', detail: 'A problem occurred!' });
             });
 
         studentService.getAllDistricts()
@@ -112,17 +116,19 @@ const AddStudent = () => {
                 if (res.status === 200) {
                     setDistricts(res.data);
                 }
+            }).catch(err => {
+                toast.current.show({ severity: 'error', summary: 'Error', detail: 'A problem occurred!' });
             });
-    }, []);
+    }, [city, district]);
 
     return (
         <>
             <Helmet>
-                <title>Add Student</title>
+                <title>Update Student</title>
             </Helmet>
             <Toast ref={toast} />
             <div style={{ padding: 32 }}>
-                <Fieldset legend="Add Student">
+                <Fieldset legend="Update Student">
                     <div className="p-fluid p-formgrid p-grid">
                         <div className="p-field p-col-12 p-md-4">
                             <label htmlFor="name">Name</label>
@@ -131,7 +137,7 @@ const AddStudent = () => {
                                 id="name"
                                 type="text"
                                 value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                onChange={e => setName(e.target.value)}
                             />
                         </div>
                         <div className="p-field p-col-12 p-md-4">
@@ -141,7 +147,7 @@ const AddStudent = () => {
                                 id="surname"
                                 type="text"
                                 value={surname}
-                                onChange={(e) => setSurname(e.target.value)}
+                                onChange={e => setSurname(e.target.value)}
                             />
                         </div>
                         <div className="p-field p-col-12 p-md-4">
@@ -152,7 +158,7 @@ const AddStudent = () => {
                                 mask="(999) 999-9999"
                                 value={phoneNumber}
                                 placeholder="(999) 999-9999"
-                                onChange={(e) => setPhoneNumber(e.value)}
+                                onChange={e => setPhoneNumber(e.target.value)}
                             ></InputMask>
                         </div>
                         <div className="p-field p-col-12 p-md-6">
@@ -186,20 +192,22 @@ const AddStudent = () => {
                                 type="text"
                                 rows="4"
                                 value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                onChange={e => setDescription(e.target.value)}
                             />
                         </div>
                     </div>
-                    <Button style={{
-                        marginBottom: 16,
-                        marginLeft: 4,
-                        float: 'right',
-                        zIndex: 1
-                    }} label="Register" icon="pi pi-plus" loading={loading} onClick={onClickRegister} />
+                    <Button
+                        className="p-button-warning"
+                        style={{
+                            marginBottom: 16,
+                            marginLeft: 4,
+                            float: 'right',
+                            zIndex: 1
+                        }} label="Update" icon="pi pi-pencil" loading={loading} onClick={onClickUpdate} />
                 </Fieldset>
             </div>
         </>
     )
 }
 
-export default AddStudent;
+export default UpdateStudent;

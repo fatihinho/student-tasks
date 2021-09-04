@@ -11,6 +11,7 @@ import StudentList from './pages/StudentList';
 
 import AppNavbar from './components/AppNavbar';
 import AddStudent from './pages/AddStudent';
+import UpdateStudent from './pages/UpdateStudent';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Switch>
           <Route path="/" exact={true} component={StudentList} />
           <Route path="/add-student" exact={true} component={AddStudent} />
+          <Route path="/update-student/:id" exact={true} component={UpdateStudent} />
         </Switch>
       </Router>
     </div>
