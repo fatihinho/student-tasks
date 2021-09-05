@@ -11,29 +11,28 @@ data class StudentImage(
     val id: UUID,
 
     @Column(name = "ImageName", nullable = false)
-    val imageName: String,
+    var imageName: String,
 
     @Column(name = "Type", nullable = false)
-    val type: String,
+    var type: String,
 
     @Column(name = "Byte", length = 10000000, nullable = false)
-    val byte: ByteArray,
+    var byte: ByteArray,
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "student_id", nullable = false)
-    val student: Student
+    @Column(name = "StudentId", nullable = false)
+    val studentId: UUID
 ) {
     constructor(
         imageName: String,
         type: String,
         byte: ByteArray,
-        student: Student
+        studentId: UUID
     ) : this(
         id = UUID.randomUUID(),
         imageName = imageName,
         type = type,
         byte = byte,
-        student = student
+        studentId = studentId
     )
 
     override fun equals(other: Any?): Boolean {
@@ -46,7 +45,7 @@ data class StudentImage(
         if (imageName != other.imageName) return false
         if (type != other.type) return false
         if (!byte.contentEquals(other.byte)) return false
-        if (student != other.student) return false
+        if (studentId != other.studentId) return false
 
         return true
     }
@@ -56,12 +55,12 @@ data class StudentImage(
         result = 31 * result + imageName.hashCode()
         result = 31 * result + type.hashCode()
         result = 31 * result + byte.contentHashCode()
-        result = 31 * result + student.hashCode()
+        result = 31 * result + studentId.hashCode()
         return result
     }
 
     override fun toString(): String {
-        return "StudentImage(id=$id, imageName='$imageName', " +
-                "type='$type', byte=${byte.contentToString()}, student=$student)"
+        return "StudentImage(id=$id, imageName='$imageName', type='$type', " +
+                "byte=${byte.contentToString()}, studentId=$studentId)"
     }
 }

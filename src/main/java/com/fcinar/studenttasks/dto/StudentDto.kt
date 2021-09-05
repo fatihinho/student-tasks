@@ -11,5 +11,6 @@ data class StudentDto(
     val phoneNumber: String,
     val city: City,
     val district: District,
-    val description: String?
+    val description: String?,
+    val imageByte: ByteArray?
 )

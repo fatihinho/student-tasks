@@ -3,7 +3,6 @@ package com.fcinar.studenttasks.service;
 import com.fcinar.studenttasks.dto.StudentImageDto;
 import com.fcinar.studenttasks.dto.converter.StudentImageConverter;
 import com.fcinar.studenttasks.exception.StudentImageNotFoundException;
-import com.fcinar.studenttasks.model.Student;
 import com.fcinar.studenttasks.model.StudentImage;
 import com.fcinar.studenttasks.repository.IStudentImageRepository;
 import org.jetbrains.annotations.NotNull;
@@ -43,7 +42,7 @@ public class StudentImageService {
                 studentImage.getImageName(),
                 studentImage.getType(),
                 decompressBytes(studentImage.getByte()),
-                studentImage.getStudent());
+                studentId);
         return studentImageConverter.convert(decompressedImage);
     }
 
@@ -54,12 +53,20 @@ public class StudentImageService {
 
     public StudentImageDto uploadStudentImageByStudentId(UUID studentId,
                                                          @NotNull MultipartFile file) throws IOException {
-        Student student = studentService.findStudentById(studentId);
-        StudentImage studentImage = new StudentImage(
-                file.getOriginalFilename(),
-                file.getContentType(),
-                compressBytes(file.getBytes()),
-                student);
-        return studentImageConverter.convert(studentImageRepository.save(studentImage));
+        if (studentImageRepository.findAllByStudentId(studentId).isEmpty()) {
+            StudentImage studentImage = new StudentImage(
+                    file.getOriginalFilename(),
+                    file.getContentType(),
+                    compressBytes(file.getBytes()),
+                    studentId);
+            studentService.setStudentImage(studentId, studentImage);
+            return studentImageConverter.convert(studentImageRepository.save(studentImage));
+        } else {
+            StudentImage studentImage = findStudentImageByStudentId(studentId);
+            studentImage.setImageName(file.getOriginalFilename());
+            studentImage.setType(file.getContentType());
+            studentImage.setByte(compressBytes(file.getBytes()));
+            return studentImageConverter.convert(studentImageRepository.save(studentImage));
+        }
     }
 }

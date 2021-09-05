@@ -29,6 +29,10 @@ data class Student(
 
     @Column(name = "Description", length = 100)
     var description: String?,
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+    @JoinColumn(name = "ImageId")
+    var studentImage: StudentImage?
 ) {
     constructor(
         name: String,
@@ -36,7 +40,8 @@ data class Student(
         phoneNumber: String,
         city: City,
         district: District,
-        description: String?
+        description: String?,
+        studentImage: StudentImage?
     ) : this(
         id = UUID.randomUUID(),
         name = name,
@@ -44,7 +49,8 @@ data class Student(
         phoneNumber = phoneNumber,
         city = city,
         district = district,
-        description = description
+        description = description,
+        studentImage = studentImage
     )
 
     override fun equals(other: Any?): Boolean {
@@ -60,6 +66,7 @@ data class Student(
         if (city != other.city) return false
         if (district != other.district) return false
         if (description != other.description) return false
+        if (studentImage != other.studentImage) return false
 
         return true
     }
@@ -72,11 +79,12 @@ data class Student(
         result = 31 * result + city.hashCode()
         result = 31 * result + district.hashCode()
         result = 31 * result + (description?.hashCode() ?: 0)
+        result = 31 * result + (studentImage?.hashCode() ?: 0)
         return result
     }
 
     override fun toString(): String {
         return "Student(id=$id, name='$name', surname='$surname', phoneNumber='$phoneNumber', " +
-                "city=$city, district=$district, description=$description)"
+                "city=$city, district=$district, description=$description, studentImage=$studentImage)"
     }
 }

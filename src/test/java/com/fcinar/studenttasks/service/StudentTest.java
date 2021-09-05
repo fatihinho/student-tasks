@@ -37,7 +37,7 @@ public class StudentTest {
         City city = new City(1, "ADANA");
         District district = new District(8, "KOZAN", city);
         Student expected = new Student(id, "name", "surname",
-                "phone-number", city, district, "description");
+                "phone-number", city, district, "description", null);
         when(studentRepository.findById(id)).thenReturn(Optional.of(expected));
         Student actual = studentService.findStudentById(id);
         assertEquals(expected, actual);
@@ -49,9 +49,9 @@ public class StudentTest {
         City city = new City(1, "ADANA");
         District district = new District(8, "KOZAN", city);
         Student student = new Student(id, "name", "surname",
-                "phone-number", city, district, "description");
+                "phone-number", city, district, "description", null);
         StudentDto expected = new StudentDto(id, "name", "surname",
-                "phone-number", city, district, "description");
+                "phone-number", city, district, "description",  null);
         when(studentRepository.findById(id)).thenReturn(Optional.of(student));
         when(studentDtoConverter.convert(student)).thenReturn(expected);
         StudentDto actual = studentService.getStudentById(id);

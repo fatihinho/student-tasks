@@ -8,6 +8,7 @@ import com.fcinar.studenttasks.exception.StudentNotFoundException;
 import com.fcinar.studenttasks.model.City;
 import com.fcinar.studenttasks.model.District;
 import com.fcinar.studenttasks.model.Student;
+import com.fcinar.studenttasks.model.StudentImage;
 import com.fcinar.studenttasks.repository.IStudentRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,7 @@ public class StudentService {
         City city = cityService.findCityById(createStudentRequest.getCityId());
         District district = districtService.findDistrictById(createStudentRequest.getDistrictId());
         Student student = new Student(createStudentRequest.getName(), createStudentRequest.getSurname(),
-                createStudentRequest.getPhoneNumber(), city, district, createStudentRequest.getDescription());
+                createStudentRequest.getPhoneNumber(), city, district, createStudentRequest.getDescription(), null);
         return studentDtoConverter.convert(studentRepository.save(student));
     }
 
@@ -72,5 +73,11 @@ public class StudentService {
     public void deleteStudentById(UUID id) {
         Student student = findStudentById(id);
         studentRepository.delete(student);
+    }
+
+    protected Student setStudentImage(UUID studentId, StudentImage studentImage) {
+        Student student = findStudentById(studentId);
+        student.setStudentImage(studentImage);
+        return studentRepository.save(student);
     }
 }

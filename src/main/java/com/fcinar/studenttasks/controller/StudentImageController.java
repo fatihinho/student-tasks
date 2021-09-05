@@ -2,6 +2,8 @@ package com.fcinar.studenttasks.controller;
 
 import com.fcinar.studenttasks.dto.StudentImageDto;
 import com.fcinar.studenttasks.service.StudentImageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1")
 public class StudentImageController {
+    private final Logger logger = LoggerFactory.getLogger(StudentImageController.class);
+
     private final StudentImageService studentImageService;
 
     public StudentImageController(StudentImageService studentImageService) {
@@ -49,6 +53,7 @@ public class StudentImageController {
             StudentImageDto studentImage = studentImageService.uploadStudentImageByStudentId(studentId, file);
             return new ResponseEntity<>(studentImage, HttpStatus.CREATED);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
