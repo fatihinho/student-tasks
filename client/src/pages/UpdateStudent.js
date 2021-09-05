@@ -9,11 +9,12 @@ import { useLocation } from 'react-router-dom';
 import { StudentService } from '../services/StudentService';
 import { Fieldset } from 'primereact/fieldset';
 import { Toast } from 'primereact/toast';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 
 const UpdateStudent = () => {
     const { id } = useParams();
     const location = useLocation();
+    const history = useHistory();
     const toast = useRef();
 
     const [loading, setLoading] = useState(false);
@@ -62,8 +63,11 @@ const UpdateStudent = () => {
                         toast.current.show({ severity: 'success', summary: 'Success', detail: 'Student has updated!' });
                         setLoading(false);
                     }
-                })
-                .catch(err => {
+                }).then(() => {
+                    setTimeout(() => {
+                        history.push('/')
+                    }, 1000)
+                }).catch(err => {
                     toast.current.show({ severity: 'error', summary: 'Error', detail: 'A problem occurred!' });
                 });
         } else {

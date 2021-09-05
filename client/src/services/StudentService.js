@@ -39,4 +39,16 @@ export class StudentService {
     deleteStudentById(id) {
         return axios.delete(`/api/v1/students/delete/${id}`);
     }
+
+    uploadImageByStudentId(id, formData) {
+        return axios.post(`/api/v1/student-images/upload/${id}`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+    }
+
+    getImageByStudentId(id) {
+        return axios.get(`/api/v1/student-images/${id}`);
+    }
 }

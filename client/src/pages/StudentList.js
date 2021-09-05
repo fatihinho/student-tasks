@@ -12,6 +12,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import { confirmDialog } from 'primereact/confirmdialog';
+import { Avatar } from 'primereact/avatar';
 
 const StudentList = () => {
     const history = useHistory();
@@ -163,6 +164,16 @@ const StudentList = () => {
         }
     };
 
+    const imageBodyTemplate = (rowData) => {
+        if (rowData.imageByte !== null) {
+            const imageUrl = `data:;base64,${rowData.imageByte}`;
+            console.log(rowData.imageByte)
+            return <Avatar image={imageUrl} className="p-mr-2" imageAlt="image" size="large" shape="circle" />;
+        } else {
+            return <Avatar className="p-mr-2" imageAlt="image" size="large" shape="circle" />;
+        }
+    }
+
     useEffect(() => {
         const studentService = new StudentService();
         studentService.getAllStudents()
@@ -170,7 +181,7 @@ const StudentList = () => {
                 if (res.status === 200 || res.status === 204) {
                     setStudents(res.data);
                 }
-            })
+            });
     }, [students]);
 
     return (
@@ -211,7 +222,6 @@ const StudentList = () => {
                             float: 'right',
                             zIndex: 1
                         }} onClick={onClickUploadImage} className="p-button-rounded" label="Upload Image" icon="pi pi-upload" />
-
                         <DataTable
                             paginator
                             paginatorTemplate={template}
@@ -224,6 +234,7 @@ const StudentList = () => {
                             onSelectionChange={e => setSelectedStudent(e.value)}
                             dataKey="id"
                         >
+                            <Column field="image" header="Image" body={imageBodyTemplate}></Column>
                             <Column field="name" header="Name"></Column>
                             <Column field="surname" header="Surname"></Column>
                             <Column field="phoneNumber" header="Phone Number"></Column>
