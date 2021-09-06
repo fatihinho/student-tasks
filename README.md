@@ -23,6 +23,8 @@ Docker
 HSQLDB(In-Memory)
 ```
 
+> <strong>Not</strong>: <code>Data Class</code> özelliğinden faydalanmak için Model, Dto ve Request dosyalarında Java yerine <code>Kotlin</code> kullanılmıştır.
+
 ### Kullanıcı Dökümantasyonu
 Bu uygulamayı kullanacak kişinin kullanırken izlemesi gereken yol şu şekildedir:
 1. Sistemde kullanmaya başladıktan sonra ilk olarak boş bir liste ile karşılaşacaksınız.
