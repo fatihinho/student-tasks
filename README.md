@@ -30,7 +30,7 @@ HSQLDB(In-Memory)
 > <strong>Not</strong>: Uygulamayı çalıştırabilmeniz için bilgisayarınızda <code>Maven</code>, <code>JDK</code> ve <code>Node.js</code> 'in kurulu ve ortam değişkenlerinde tanımlı olduğundan emin olun.
 
 Projenin kaynak kodunu bilgisayarınıza indirdikten sonra:
-1. Proje içerisindeyken ilk olarak yapmanız gereken şey projeyi build etmektir (IntelliJ IDEA 'da Ctrl+F9 ile yapabilirsiniz). Böylelikle uygulamanın çalışması için gerekli olan <code>/target</code> klasörü oluşacaktır.
+1. Proje içerisindeyken ilk olarak yapmanız gereken şey projeyi build etmektir. Böylelikle uygulamanın çalışması için gerekli olan <code>/target</code> klasörü oluşacaktır.
 2. Daha sonra terminalde <code>mvn spring-boot:run</code> komutunu kullanarak uygulamanın server kısmını localhost:8080 portu üzerinde çalıştırabilirsiniz.
 3. Ardından /client dizinine girerek, terminalde <code>npm install</code> komutunu kullanarak uygulamanızın <code>node_modules</code> klasörünü oluşturursunuz.
 4. Son olarak aynı terminalde <code>npm start</code> komutunu kullanarak uygulamanın client kısmını localhost:3000 portu üzerinde çalıştırabilirsiniz.
