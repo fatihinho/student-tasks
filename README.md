@@ -15,6 +15,7 @@ Maven
 Spring
 JUnit
 Mockito
+Node.js
 React
 React Hooks
 PrimeReact
@@ -25,15 +26,23 @@ HSQLDB(In-Memory)
 
 > <strong>Not</strong>: <code>Data Class</code> özelliğinden faydalanmak için Model, Dto ve Request dosyalarında Java yerine <code>Kotlin</code> kullanılmıştır.
 
+### Derleme ve Çalıştırma
+> <strong>Not</strong>: Uygulamayı çalıştırabilmeniz için bilgisayarınızda <code>Maven</code>, <code>JDK</code> ve <code>Node.js</code> 'in kurulu ve ortam değişkenlerinde tanımlı olduğundan emin olun.
+
+Projenin kaynak kodunu bilgisayarınıza indirdikten sonra:
+1. Proje içerisindeyken terminalde <code>mvn spring-boot:run</code> komutunu kullanarak uygulamanın server kısmını localhost:8080 portu üzerinde çalıştırabilirsiniz.
+2. Ardından /client dizinine girerek, bu sefer terminalde <code>npm start</code> komutunu kullanarak uygulamanın client kısmını localhost:3000 portu üzerinde çalıştırabilirsiniz.
+3. Bu işlemlerden sonra uygulamayı artık kullanmaya başlayabilirsiniz.
+
 ### Kullanıcı Dökümantasyonu
 Bu uygulamayı kullanacak kişinin kullanırken izlemesi gereken yol şu şekildedir:
 1. Sistemde kullanmaya başladıktan sonra ilk olarak boş bir liste ile karşılaşacaksınız.
-2. Sağ üst tarafta “Upload Image”, “Update” ve “Delete” butonlarını göreceksiniz. Lakin o butonları kullanabilmek için öncelikle sisteme öğrenci eklemeniz ve seçmeniz gerekmektedir.
-3. Öğrenci ekleme ekranına geçmek için, sol üst tarafta bulunan menu tuşuna basarak yan navigasyon ekranını açıp, “Add Student” butonuna kullanabilirsiniz.
-4. Öğrenci ekleme ekranına geldikten sonra, isim, soy isim, telefon numarası, şehir, ilçe ve isteğe bağlı açıklama alanlarını doldurarak sağ alt taraftaki “Register” butonuyla öğrenci ekleme işlemini gerçekleştirebilirsiniz.
-5. Ardından yine menu tuşunu kullanarak yan navigasyon ekranını açıp, bu sefer “Student List” butonuyla öğrenci listeleme ekranına geçebilirsiniz.
+2. Sağ üst tarafta <code>Upload Image</code>, <code>Update</code> ve <code>Delete</code> butonlarını göreceksiniz. Lakin o butonları kullanabilmek için öncelikle sisteme öğrenci eklemeniz ve seçmeniz gerekmektedir.
+3. Öğrenci ekleme ekranına geçmek için, sol üst tarafta bulunan menu tuşuna basarak yan navigasyon ekranını açıp, <code>Add Student</code> butonuna kullanabilirsiniz.
+4. Öğrenci ekleme ekranına geldikten sonra, isim, soy isim, telefon numarası, şehir, ilçe ve isteğe bağlı açıklama alanlarını doldurarak sağ alt taraftaki <code>Register</code> butonuyla öğrenci ekleme işlemini gerçekleştirebilirsiniz.
+5. Ardından yine menu tuşunu kullanarak yan navigasyon ekranını açıp, bu sefer <code>Student List</code> butonuyla öğrenci listeleme ekranına geçebilirsiniz.
 6. Öğrenci listeleme ekranına geldiğinizde eklemiş olduğunu öğrenci kaydını görüntüleyeceksiniz. Bu kayda tıklayarak artık sağ üstteki butonları kullanabilirsiniz. İstediğiniz öğrenciye fotoğraf ekleyip, güncelleyip, o öğrenciyi silebilirsiniz.
-7. Öğrenci kaydını seçtikten sonra sol üst tarafta oluşacak olan “Clear Selection” butonunu kullanarak seçme işlemini kaldırabilirsiniz. 
+7. Öğrenci kaydını seçtikten sonra sol üst tarafta oluşacak olan <code>Clear Selection</code> butonunu kullanarak seçme işlemini kaldırabilirsiniz. 
 
 ## Uygulama Mockup ve Prototipi
 ![](images/mockup.png)
