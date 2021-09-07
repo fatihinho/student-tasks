@@ -12,15 +12,15 @@ Bu uygulamada, öğrenci kaydı listeleme, ekleme, güncelleme, silme, fotoğraf
 ```
 JDK
 Maven
-Spring
-JUnit
+Spring Boot
+Hibernate
 Mockito
-Node.js
 React
 React Hooks
 PrimeReact
 Axios
 Docker
+SonarQube
 HSQLDB(In-Memory)
 ```
 
