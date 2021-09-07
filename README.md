@@ -1,6 +1,6 @@
 # Student Tasks
 
-## Spring & React | CRUD Web Uygulaması
+## Spring Boot & React | CRUD Web Uygulaması
 
 ### Uygulamanın Amacı
 Bu uygulamada, öğrenci kaydı listeleme, ekleme, güncelleme, silme, fotoğraf ekleme gibi özelliklerin sağlanması amaçlanmıştır. 
