@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class StudentTest {
+class StudentTest {
     private IStudentRepository studentRepository;
     private StudentService studentService;
     private CityService cityService;
@@ -32,7 +32,7 @@ public class StudentTest {
     }
 
     @Test
-    public void testFindStudentById_whenStudentIdExists_shouldFindStudent() {
+    void testFindStudentById_whenStudentIdExists_shouldFindStudent() {
         UUID id = UUID.randomUUID();
         City city = new City(1, "ADANA");
         District district = new District(8, "KOZAN", city);
@@ -44,7 +44,7 @@ public class StudentTest {
     }
 
     @Test
-    public void testGetStudentById_whenStudentIdExists_shouldGetStudentDto() {
+    void testGetStudentById_whenStudentIdExists_shouldGetStudentDto() {
         UUID id = UUID.randomUUID();
         City city = new City(1, "ADANA");
         District district = new District(8, "KOZAN", city);

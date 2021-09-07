@@ -34,9 +34,9 @@ const StudentList = () => {
                 setPageInputTooltip(`Value must be between 1 and ${options.totalPages}.`);
             }
             else {
-                const first = currentPage ? options.rows * (page - 1) : 0;
+                const firstPage = currentPage ? options.rows * (page - 1) : 0;
 
-                setFirst(first);
+                setFirst(firstPage);
                 setPageInputTooltip('Press \'Enter\' key to go to this page.');
             }
         }

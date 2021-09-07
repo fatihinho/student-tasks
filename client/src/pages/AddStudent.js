@@ -74,22 +74,22 @@ const AddStudent = () => {
                 setTimeout(() => {
                     setNameError(false);
                 }, 1500);
-            } if (surname.trim().length <= 0) {
+            } else if (surname.trim().length <= 0) {
                 setSurnameError(true);
                 setTimeout(() => {
                     setSurnameError(false);
                 }, 1500);
-            } if (phoneNumber.length <= 0) {
+            } else if (phoneNumber.length <= 0) {
                 setPhoneError(true);
                 setTimeout(() => {
                     setPhoneError(false);
                 }, 1500);
-            } if (selectedCity === null) {
+            } else if (selectedCity === null) {
                 setCityError(true);
                 setTimeout(() => {
                     setCityError(false);
                 }, 1500);
-            } if (selectedDistrict === null) {
+            } else if (selectedDistrict === null) {
                 setDistrictError(true);
                 setTimeout(() => {
                     setDistrictError(false);

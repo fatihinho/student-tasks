@@ -1,6 +1,8 @@
 package com.fcinar.studenttasks.utils;
 
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -9,6 +11,12 @@ import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 public class StudentImageUtils {
+    private static final Logger logger = LoggerFactory.getLogger(StudentImageUtils.class);
+
+    private StudentImageUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     @NotNull
     public static byte[] compressBytes(byte[] data) {
         Deflater deflater = new Deflater();
@@ -23,8 +31,9 @@ public class StudentImageUtils {
         try {
             outputStream.close();
         } catch (IOException ignored) {
+            logger.error(ignored.getMessage());
         }
-        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
+        logger.error("Compressed Image Byte Size - " + outputStream.toByteArray().length);
         return outputStream.toByteArray();
     }
 
@@ -41,6 +50,7 @@ public class StudentImageUtils {
             }
             outputStream.close();
         } catch (IOException | DataFormatException ignored) {
+            logger.error(ignored.getMessage());
         }
         return outputStream.toByteArray();
     }

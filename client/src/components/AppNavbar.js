@@ -1,7 +1,7 @@
 import { Button } from 'primereact/button';
 import React, { useState } from 'react';
 import { Navbar, NavbarBrand } from 'reactstrap';
-import AppSidebar from './Sidebar';
+import AppSidebar from './AppSidebar';
 
 const AppNavbar = () => {
     const [visible, setVisible] = useState(false);
